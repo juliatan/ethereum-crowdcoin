@@ -19,6 +19,16 @@
 .env.test.local
 .env.production.local
 
+# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# next.js
+/.next/
+
+# testing
+/coverage
+
+# vercel
+.vercel
