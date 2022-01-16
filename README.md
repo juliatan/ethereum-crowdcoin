@@ -4,8 +4,6 @@
 - It's a smart contract that a user to create a Kickerstarter-like campaign.
 - This request goes through a CampaignFactory smart contract, which in turn creates a Campaign contract with some minimum value of contribution required from backers of a campaign.
 
-- The corresponding front end React UI can be viewed [here](https://github.com/juliatan/solidity-lottery-react).
-
 ## How I set up this project from scratch
 
 - In the folder directory, run `npm init` and create a `package.json` file.
@@ -33,7 +31,6 @@
 
 - `npm run test` - run test suite
 - `node deploy.js` - deploy contract to test network
-  - You'll need to create a `.env` file with your `INFURA_API` and Metamask wallet `MNEMONIC`. This is parsed in `compile.js`, so that the variables are available when running `node deploy.js`.
   - If you get an error to do with `ERR_OSSL_EVP_UNSUPPORTED`, it'll be due to an issue with the node version you're using. I used `nvm` to switch to version 15.8.0, which does the trick. Alternatively if you don't want to do this, set this option `export NODE_OPTIONS=--openssl-legacy-provider`.
 
 ## Resources
