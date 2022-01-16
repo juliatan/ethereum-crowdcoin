@@ -14,9 +14,7 @@ contract CampaignFactory {
   function getDeployedCampaigns() public view returns (address[] memory) {
     return deployedCampaigns;
   }
-
 }
-
 
 contract Campaign {
 
@@ -34,7 +32,6 @@ contract Campaign {
   mapping(address => bool) public approvers;
   uint public approversCount;
 
-  // Request[] public requests;
   mapping(uint => Request) public requests;
   uint private currentIndex = 0;
 
@@ -48,11 +45,6 @@ contract Campaign {
     minimumContribution = minimum;
   }
 
-  // function Campaign(uint minimum, address creator) public {
-  //   manager = creator;
-  //   minimumContribution = minimum;
-  // }
-
   function contribute() public payable {
     require(msg.value > minimumContribution);
     approvers[msg.sender] = true;
@@ -60,15 +52,6 @@ contract Campaign {
   }
 
   function createRequest(string memory description, uint value, address payable recipient) public restricted {
-    // Request memory newRequest = Request({
-    //   description: description,
-    //   value: value,
-    //   recipient: recipient,
-    //   complete: false,
-    //   approvalCount: 0
-    // });
-    // requests.push(newRequest);
-
     Request storage newRequest = requests[currentIndex];
     newRequest.description = description;
     newRequest.value = value;
