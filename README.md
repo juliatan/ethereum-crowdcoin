@@ -31,7 +31,8 @@
 - Configure web3 with a provider from Metamask in `ethereum/web3.js`.
 - Tell web3 that a deployed copy of the CampaignFactory exists on the Rinkeby network in `ethereum/factory.js`. Be sure to use the `NEXT_PUBLIC_FACTORY_ADDRESS` environment here.
 - Use the factory instance to retrieve a list of deployed campaigns. To set up dummy data (i.e. create a deployed campaign), use Remix. Check the environment is "injected Web3", selected "CampaignFactory" contract and add the contract address we deployed. The click "createCampaign" with some minimum contribution value (e.g. 100 wei).
-- Setup `pages/index.tsx` to render details on each campaign by calling the factory instance methods.
+- Setup `pages/index.tsx` to render details on each campaign by calling the factory instance methods. We want the calling of the contract to happen before the component is rendered, hence the use of getStaticProps.
+- Use Semantic UI React to style the page.
 
 ## Packages
 
@@ -49,6 +50,7 @@
 
 - NextJS (React framework)
 - Typescript
+- Semantic UI React + Semantic UI CSS
 
 ## To run
 
