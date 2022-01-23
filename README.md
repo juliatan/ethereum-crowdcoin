@@ -18,13 +18,20 @@
   - As part of this, install truffle using `yarn add @truffle/hdwallet-provider`.
   - Also `yarn add dotenv`, create a `.env` file in the same directory as the `deploy.js` script, with `INFURA_API` and `MNEMONIC` environment variables for the Rinkeby test network.
   - Load the .env file at the top of the `deploy.js` file.
-- Deploy contract to Rinkeby test network. In the ethereum directory, run `node deploy.js`.
+- Deploy contract to Rinkeby test network. In the ethereum directory, run `node deploy.js`. Make a note of the contract address that is returned and save to `.env.local` file in the root folder (this is what NextJS will automatically use to load environment variables). Be sure to prefix the variable name with "NEXT*PUBLIC*" e.g. `NEXT_PUBLIC_FACTORY_ADDRESS=xxxxx`.
 
 ### Frontend UI
 
 - Install NextJS using `yarn add next react react-dom`. In `package.json`, be sure to add a script for `"dev": "next dev"`.
 - Install Typescript and other dev dependencies for linting and typechecking (see `package.json`).
 - Create `pages` directory and add routes.
+
+### Set up Campaign List page
+
+- Configure web3 with a provider from Metamask in `ethereum/web3.js`.
+- Tell web3 that a deployed copy of the CampaignFactory exists on the Rinkeby network in `ethereum/factory.js`. Be sure to use the `NEXT_PUBLIC_FACTORY_ADDRESS` environment here.
+- Use the factory instance to retrieve a list of deployed campaigns. To set up dummy data (i.e. create a deployed campaign), use Remix. Check the environment is "injected Web3", selected "CampaignFactory" contract and add the contract address we deployed. The click "createCampaign" with some minimum contribution value (e.g. 100 wei).
+- Setup `pages/index.tsx` to render details on each campaign by calling the factory instance methods.
 
 ## Packages
 

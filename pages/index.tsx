@@ -1,9 +1,30 @@
-import * as React from 'react'
+import React, { FC, useEffect, useState } from 'react'
+import factory from '../ethereum/factory'
 
-export default function Index() {
+const CampaignIndex: FC = () => {
+  const [campaigns, setCampaigns] = useState([])
+
+  useEffect(() => {
+    const fetchCampaigns = async () => {
+      const data = await factory.methods.getDeployedCampaigns().call()
+      console.log(data)
+      setCampaigns(data)
+    }
+
+    try {
+      fetchCampaigns()
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
+
   return (
-    <div>
+    <>
       <h1>Campaign list page</h1>
-    </div>
+      <p>List of campaigns</p>
+      {campaigns.map((campaign) => campaign)}
+    </>
   )
 }
+
+export default CampaignIndex
