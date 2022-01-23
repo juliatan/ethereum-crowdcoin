@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
-import { render } from 'react-dom'
 import { Button, Card } from 'semantic-ui-react'
+import Layout from '../components/Layout'
 import factory from '../ethereum/factory'
 
 interface CampaignIndexProps {
@@ -16,12 +16,13 @@ const CampaignIndex: FC<CampaignIndexProps> = (props) => {
   }
 
   return (
-    <>
+    <Layout>
       <link async rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css" />
       <h1>Campaign list page</h1>
+      <h3>Open Campaigns</h3>
       {renderCampaigns()}
       <Button content="Create campaign" icon="add circle" primary />
-    </>
+    </Layout>
   )
 }
 
