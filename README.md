@@ -33,6 +33,7 @@
 - Use the factory instance to retrieve a list of deployed campaigns. To set up dummy data (i.e. create a deployed campaign), use Remix. Check the environment is "injected Web3", selected "CampaignFactory" contract and add the contract address we deployed. The click "createCampaign" with some minimum contribution value (e.g. 100 wei).
 - Setup `pages/index.tsx` to render details on each campaign by calling the factory instance methods. We want the calling of the contract to happen before the component is rendered, hence the use of getStaticProps.
 - Use Semantic UI React to style the page, including adding Layout component.
+- Setup `pages/campaigns/new.tsx` which will be the gateway to creating a new campaign.
 
 ## Packages
 

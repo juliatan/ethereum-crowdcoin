@@ -17,7 +17,6 @@ const CampaignIndex: FC<CampaignIndexProps> = (props) => {
 
   return (
     <Layout>
-      <link async rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css" />
       <h1>Campaign list page</h1>
       <h3>Open Campaigns</h3>
       <Button floated="right" content="Create campaign" icon="add circle" primary />
