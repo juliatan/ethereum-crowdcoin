@@ -3,11 +3,14 @@ import { Button, Form, Input, Message } from 'semantic-ui-react'
 import Layout from '../../components/Layout'
 import factory from '../../ethereum/factory'
 import web3 from '../../ethereum/web3'
+import { useRouter } from 'next/router'
 
 export const CampaignNew: FC = () => {
   const [minContribution, setMinContribution] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [loading, setLoading] = useState(false)
+
+  const router = useRouter()
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -17,6 +20,7 @@ export const CampaignNew: FC = () => {
       const accounts = await web3.eth.getAccounts()
       // Note: don't need to specify gas amount as Metamask tries to calculate this automatically
       await factory.methods.createCampaign(minContribution).send({ from: accounts[0] })
+      router.push('/')
     } catch (err: any) {
       setErrorMessage(err.message)
     }
