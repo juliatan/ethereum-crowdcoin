@@ -26,7 +26,7 @@
 - Install Typescript and other dev dependencies for linting and typechecking (see `package.json`).
 - Create `pages` directory and add routes.
 
-### Set up Campaign List page
+### Set up Campaign List and Campaign creation pages
 
 - Configure web3 with a provider from Metamask in `ethereum/web3.js`.
 - Tell web3 that a deployed copy of the CampaignFactory exists on the Rinkeby network in `ethereum/factory.js`. Be sure to use the `NEXT_PUBLIC_FACTORY_ADDRESS` environment here.
@@ -34,6 +34,10 @@
 - Setup `pages/index.tsx` to render details on each campaign by calling the factory instance methods. We want the calling of the contract to happen before the component is rendered, hence the use of getStaticProps.
 - Use Semantic UI React to style the page, including adding Layout component.
 - Setup `pages/campaigns/new.tsx` which will be the gateway to creating a new campaign.
+
+### Add routes to Header component
+
+- Use NextJS routing
 
 ## Packages
 
