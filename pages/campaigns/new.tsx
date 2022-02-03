@@ -5,7 +5,7 @@ import factory from '../../ethereum/factory'
 import web3 from '../../ethereum/web3'
 import { useRouter } from 'next/router'
 
-export const CampaignNew: FC = () => {
+const CampaignNew: FC = () => {
   const [minContribution, setMinContribution] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [loading, setLoading] = useState(false)

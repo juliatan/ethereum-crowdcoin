@@ -35,9 +35,15 @@
 - Use Semantic UI React to style the page, including adding Layout component.
 - Setup `pages/campaigns/new.tsx` which will be the gateway to creating a new campaign.
 
-### Add routes to Header component
+### Add routes and Link tags
 
-- Use NextJS routing
+- Use NextJS routing to add routes to Header component
+- Set up dynamic routes in `pages/campaigns/[address].tsx` to link to each campaign.
+
+### Add some helper methods to original contract
+
+- We want to minimise API calls made to our contract when displaying each campaign's details. To do this, create some helper methods to get the summary for a campaign in the original Campaign.sol contract.
+- In the ethereum directory, run `node compile.js` then `node deploy.js`. Remember to address the env var for the new contract address.
 
 ## Packages
 
