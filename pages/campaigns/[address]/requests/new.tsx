@@ -1,12 +1,13 @@
 import React, { Component, useState } from "react";
 import { Form, Button, Message, Input } from "semantic-ui-react";
 import { useRouter } from "next/router";
-import Campaign from "../../../ethereum/campaign";
-import web3 from "../../../ethereum/web3";
-import Layout from "../../../components/Layout";
+import Campaign from "../../../../ethereum/campaign";
+import web3 from "../../../../ethereum/web3";
+import Layout from "../../../../components/Layout";
 import Link from "next/link";
-const RequestNew = ({ address }: any) => {
+const RequestNew = () => {
   const router = useRouter();
+  const { address } = router.query;
   const [value, setValue] = useState<string>();
   const [errorMessage, setErrorMessage] = useState<string>();
   const [loading, setLoading] = useState(false);
@@ -27,7 +28,7 @@ const RequestNew = ({ address }: any) => {
       await campaign.methods
         .createRequest(description, web3.utils.toWei(value, "ether"), recipient)
         .send({ from: accounts[0] });
-      router.push(`/campaigns/${address}/requests`);
+      // router.push(`/campaigns/${address}/requests`);
     } catch (err: any) {
       setErrorMessage(err.message);
     }

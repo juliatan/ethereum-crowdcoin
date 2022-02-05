@@ -1,9 +1,10 @@
 import Link from "next/link";
 import React, { Component } from "react";
 import { Button, Table } from "semantic-ui-react";
-import Layout from "../../../components/Layout";
-import RequestRow from "../../../components/RequestRow";
-import Campaign from "../../../ethereum/campaign";
+import Layout from "../../../../components/Layout";
+import RequestRow from "../../../../components/RequestRow";
+import Campaign from "../../../../ethereum/campaign";
+import web3 from "../../../../ethereum/web3";
 
 const RequestIndex = ({
   address,
@@ -14,23 +15,34 @@ const RequestIndex = ({
   const { Header, Row, HeaderCell, Body } = Table;
 
   const renderRows = () => {
-    return requests.map((request: any, index: number) => {
-      return (
-        <RequestRow
-          key={index}
-          id={index}
-          request={request}
-          address={address}
-          approversCount={approversCount}
-        />
-      );
-    });
+    const requestsJSON = JSON.parse(requests);
+    return requestsJSON
+      .filter((request: any) => {
+        if (web3.utils.fromWei(request.value, "ether") === "0") return false;
+        return true;
+      })
+      .map((request: any, index: number) => {
+        return (
+          <RequestRow
+            key={index}
+            id={index}
+            request={request}
+            address={address}
+            approversCount={approversCount}
+          />
+        );
+      });
   };
 
   return (
     <Layout>
       <h3>Requests</h3>
-      <Link href={`/campaigns/${address}/requests/new`}>
+      <Link
+        href={{
+          pathname: `/campaigns/${address}/requests/new`,
+          query: { address },
+        }}
+      >
         <a>
           <Button primary floated="right" style={{ marginBottom: 10 }}>
             Add Request
@@ -60,19 +72,19 @@ export default RequestIndex;
 
 export async function getServerSideProps(context: any) {
   const { address } = context.query;
-  const campaign = Campaign(address);
 
+  const campaign = Campaign(address);
   const requestCount = await campaign.methods.getRequestsCount().call();
   const approversCount = await campaign.methods.approversCount().call();
 
-  const requests = await Promise.all(
-    Array(parseInt(requestCount))
-      //@ts-ignore
-      .fill()
-      .map((element, index) => {
-        return campaign.methods.requests(index).call();
-      })
-  );
+  let requests = [];
+  for (let i = 0; i < requestCount; i++) {
+    const request = await campaign.methods.requests(i).call();
+    requests.push(request);
+  }
+  const requestsString = JSON.stringify(requests);
 
-  return { props: { address, requests, requestCount, approversCount } };
+  return {
+    props: { address, requests: requestsString, requestCount, approversCount },
+  };
 }

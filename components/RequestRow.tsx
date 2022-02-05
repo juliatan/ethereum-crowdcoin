@@ -17,7 +17,7 @@ const RequestRow = ({ address, id, request, approversCount }: any) => {
     const campaign = Campaign(address);
 
     const accounts = await web3.eth.getAccounts();
-    await campaign.methods.finalizeRequest(id).send({
+    await campaign.methods.finaliseRequest(id).send({
       from: accounts[0],
     });
   };

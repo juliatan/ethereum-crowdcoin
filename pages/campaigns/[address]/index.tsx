@@ -1,11 +1,10 @@
 import Link from "next/link";
 import React, { FC } from "react";
 import { Button, Card, Grid } from "semantic-ui-react";
-import ContributeForm from "../../components/ContributeForm";
-import Layout from "../../components/Layout";
-import Campaign from "../../ethereum/campaign";
-import web3 from "../../ethereum/web3";
-
+import ContributeForm from "../../../components/ContributeForm";
+import Layout from "../../../components/Layout";
+import web3 from "../../../ethereum/web3";
+import Campaign from "../../../ethereum/campaign";
 const CampaignShow: FC = ({
   address,
   balance,
