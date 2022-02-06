@@ -42,8 +42,13 @@
 
 ### Add some helper methods to original contract
 
-- We want to minimise API calls made to our contract when displaying each campaign's details. To do this, create some helper methods to get the summary for a campaign in the original Campaign.sol contract.
-- In the ethereum directory, run `node compile.js` then `node deploy.js`. Remember to address the env var for the new contract address.
+- We want to minimise API calls made to our contract when displaying each campaign's details. To do this, create some helper methods to get the summary for a campaign in the original `Campaign.sol` contract.
+- In the ethereum directory, run `node compile.js` then `node deploy.js`. Remember to amnd the env var for the new contract address.
+- Create a new file in `/ethereum/campaign.js` and export a function that allows us to create a new campaign contract instance based on an address we pass in.
+
+### Display individual campaign data
+
+- In `pages/campaigns/[address].tsx`, we want to display the details of a campaign. We can use `getServerSideProps` to get the address from the URL, and pass that into our `createCampaignContractInstance()` function. This gives us back the summary, which we can then render on the page.
 
 ## Packages
 
