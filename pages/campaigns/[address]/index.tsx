@@ -1,10 +1,11 @@
 import { GetServerSidePropsContext } from 'next'
+import Link from 'next/link'
 import React, { FC, ReactChildren } from 'react'
-import { Card, Grid } from 'semantic-ui-react'
-import { ContributeForm } from '../../components/ContributeForm'
-import Layout from '../../components/Layout'
-import { createCampaignContractInstance } from '../../ethereum/campaign'
-import web3 from '../../ethereum/web3'
+import { Button, Card, Grid } from 'semantic-ui-react'
+import { ContributeForm } from '../../../components/ContributeForm'
+import Layout from '../../../components/Layout'
+import { createCampaignContractInstance } from '../../../ethereum/campaign'
+import web3 from '../../../ethereum/web3'
 
 type CampaignSummary = {
   minimumContribution: number
@@ -73,10 +74,21 @@ const CampaignShow: FC<CampaignShowProps> = ({ summary, address }) => {
       <h1>Campaign Show Page</h1>
 
       <Grid>
-        <Grid.Column width={10}>{renderCards()}</Grid.Column>
-        <Grid.Column width={6}>
-          <ContributeForm address={address} />
-        </Grid.Column>
+        <Grid.Row>
+          <Grid.Column width={10}>{renderCards()}</Grid.Column>
+          <Grid.Column width={6}>
+            <ContributeForm address={address} />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <Link href={`/campaigns/${address}/requests`}>
+              <a>
+                <Button primary>View Requests</Button>
+              </a>
+            </Link>
+          </Grid.Column>
+        </Grid.Row>
       </Grid>
     </Layout>
   )

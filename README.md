@@ -18,7 +18,7 @@
   - As part of this, install truffle using `yarn add @truffle/hdwallet-provider`.
   - Also `yarn add dotenv`, create a `.env` file in the same directory as the `deploy.js` script, with `INFURA_API` and `MNEMONIC` environment variables for the Rinkeby test network.
   - Load the .env file at the top of the `deploy.js` file.
-- Deploy contract to Rinkeby test network. In the ethereum directory, run `node deploy.js`. Make a note of the contract address that is returned and save to `.env.local` file in the root folder (this is what NextJS will automatically use to load environment variables). Be sure to prefix the variable name with "NEXT*PUBLIC*" e.g. `NEXT_PUBLIC_FACTORY_ADDRESS=xxxxx`.
+- Deploy contract to Rinkeby test network. In the ethereum directory, run `node deploy.js`. Make a note of the contract address that is returned and save to `.env.local` file in the root folder (this is what NextJS will automatically use to load environment variables). Be sure to prefix the variable name with "NEXT PUBLIC" e.g. `NEXT_PUBLIC_FACTORY_ADDRESS=xxxxx`.
 
 ### Frontend UI
 
@@ -33,23 +33,22 @@
 - Use the factory instance to retrieve a list of deployed campaigns. To set up dummy data (i.e. create a deployed campaign), use Remix. Check the environment is "injected Web3", selected "CampaignFactory" contract and add the contract address we deployed. The click "createCampaign" with some minimum contribution value (e.g. 100 wei).
 - Setup `pages/index.tsx` to render details on each campaign by calling the factory instance methods. We want the calling of the contract to happen before the component is rendered, hence the use of getStaticProps.
 - Use Semantic UI React to style the page, including adding Layout component.
-- Setup `pages/campaigns/new.tsx` which will be the gateway to creating a new campaign.
+- Setup `pages/campaigns/new.tsx` which will allow us to create a new campaign.
 
-### Add routes and Link tags
+### Set up ability to view each campaign's details
 
-- Use NextJS routing to add routes to Header component
-- Set up dynamic routes in `pages/campaigns/[address].tsx` to link to each campaign.
-
-### Add some helper methods to original contract
-
+- Use NextJS routing to add routes to our Header component.
+- To allow us to view each campaign's details, set up a dynamic route by creating `pages/campaigns/[address]/index.tsx`.
 - We want to minimise API calls made to our contract when displaying each campaign's details. To do this, create some helper methods to get the summary for a campaign in the original `Campaign.sol` contract.
-- In the ethereum directory, run `node compile.js` then `node deploy.js`. Remember to amnd the env var for the new contract address.
-- Create a new file in `/ethereum/campaign.js` and export a function that allows us to create a new campaign contract instance based on an address we pass in.
+  - In the ethereum directory, run `node compile.js` then `node deploy.js`. Remember to amnd the env var for the new contract address since this is being redeployed to the test net.
+- Create a new file in `/ethereum/campaign.js` and export a function that allows us to create a new campaign contract instance based on an address we pass in. This will be handy as we'll require this instance to interact with campaign contracts, multiple times.
+- In `pages/campaigns/[address]/index.tsx`, we want to display the details of a campaign. We can use `getServerSideProps` to get the address from the URL, and pass that into our `createCampaignContractInstance()` function. This gives us back the summary, which we can then render on the page.
+- Create a contribute form component in `components/ContributeForm.tsx`. This requires a campaign contract instance so that we can call the `contribute()` method.
 
-### Display individual campaign data
+### Set up the ability to view a campaign's requests and add a request
 
-- In `pages/campaigns/[address].tsx`, we want to display the details of a campaign. We can use `getServerSideProps` to get the address from the URL, and pass that into our `createCampaignContractInstance()` function. This gives us back the summary, which we can then render on the page.
-- Create a contribute form component in `components/ContributeForm.tsx`. Create a campaign contract instance so that we can call the `contribute()` method.
+- Create `pages/campaigns/[address]/requests.tsx` which will allow us to view a campaign's requests.
+- Add a button that links to `pages/campaigns/[address]/create-request.tsx` where we can create a new request. Create the form that takes inputs necessary to run the `createRequest()` method.
 
 ## Packages
 
