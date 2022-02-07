@@ -1,7 +1,9 @@
 import { GetServerSidePropsContext } from 'next'
 import React, { FC, ReactChildren } from 'react'
+import { Card } from 'semantic-ui-react'
 import Layout from '../../components/Layout'
 import { createCampaignContractInstance } from '../../ethereum/campaign'
+import web3 from '../../ethereum/web3'
 
 type CampaignSummary = {
   minimumContribution: number
@@ -30,10 +32,44 @@ const getCampaignSummary = async (address: string): Promise<CampaignSummary> => 
 }
 
 const CampaignShow: FC<CampaignShowProps> = ({ summary }) => {
+  const renderCards = () => {
+    const { minimumContribution, balance, approversCount, requestsCount, manager } = summary
+    const items = [
+      {
+        header: manager,
+        meta: 'Address of manager',
+        description: 'The manager created this campaign and can create requests to withdraw money',
+        style: { overflowWrap: 'break-word' },
+      },
+      {
+        header: minimumContribution,
+        description: 'Minimum contribution (wei)',
+        meta: 'You must contribute at least this much wei to become an approver',
+      },
+      {
+        header: web3.utils.fromWei(balance, 'ether'),
+        description: 'Campaign balance (ether)',
+        meta: 'How much money this campaign has left to spend',
+      },
+      {
+        header: approversCount,
+        description: 'Number of people who have already donated to this campaign',
+        meta: 'Number of approvers',
+      },
+      {
+        header: requestsCount,
+        description:
+          'A request tries to withdraw money from the contract. This needs to be approved by the majority of approvers.',
+        meta: 'Number of requests',
+      },
+    ]
+    return <Card.Group items={items} />
+  }
+
   return (
     <Layout>
       <h1>Campaign Show Page</h1>
-      {summary.minimumContribution}
+      {renderCards()}
     </Layout>
   )
 }
