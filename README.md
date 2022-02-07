@@ -49,6 +49,7 @@
 ### Display individual campaign data
 
 - In `pages/campaigns/[address].tsx`, we want to display the details of a campaign. We can use `getServerSideProps` to get the address from the URL, and pass that into our `createCampaignContractInstance()` function. This gives us back the summary, which we can then render on the page.
+- Create a contribute form component in `components/ContributeForm.tsx`. Create a campaign contract instance so that we can call the `contribute()` method.
 
 ## Packages
 

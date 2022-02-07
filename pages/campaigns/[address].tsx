@@ -1,6 +1,7 @@
 import { GetServerSidePropsContext } from 'next'
 import React, { FC, ReactChildren } from 'react'
-import { Card } from 'semantic-ui-react'
+import { Card, Grid } from 'semantic-ui-react'
+import { ContributeForm } from '../../components/ContributeForm'
 import Layout from '../../components/Layout'
 import { createCampaignContractInstance } from '../../ethereum/campaign'
 import web3 from '../../ethereum/web3'
@@ -14,8 +15,9 @@ type CampaignSummary = {
 }
 
 interface CampaignShowProps {
-  summary: CampaignSummary
+  address: string
   children: ReactChildren
+  summary: CampaignSummary
 }
 
 const getCampaignSummary = async (address: string): Promise<CampaignSummary> => {
@@ -31,7 +33,7 @@ const getCampaignSummary = async (address: string): Promise<CampaignSummary> => 
   }
 }
 
-const CampaignShow: FC<CampaignShowProps> = ({ summary }) => {
+const CampaignShow: FC<CampaignShowProps> = ({ summary, address }) => {
   const renderCards = () => {
     const { minimumContribution, balance, approversCount, requestsCount, manager } = summary
     const items = [
@@ -69,7 +71,13 @@ const CampaignShow: FC<CampaignShowProps> = ({ summary }) => {
   return (
     <Layout>
       <h1>Campaign Show Page</h1>
-      {renderCards()}
+
+      <Grid>
+        <Grid.Column width={10}>{renderCards()}</Grid.Column>
+        <Grid.Column width={6}>
+          <ContributeForm address={address} />
+        </Grid.Column>
+      </Grid>
     </Layout>
   )
 }
@@ -78,7 +86,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { address } = context.query
 
   const summary = await getCampaignSummary(address as string)
-  return { props: { summary } }
+  return { props: { summary, address } }
 }
 
 export default CampaignShow
