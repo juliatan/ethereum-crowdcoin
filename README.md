@@ -48,7 +48,9 @@
 ### Set up the ability to view a campaign's requests and add a request
 
 - Create `pages/campaigns/[address]/requests.tsx` which will allow us to view a campaign's requests.
-- Add a button that links to `pages/campaigns/[address]/create-request.tsx` where we can create a new request. Create the form that takes inputs necessary to run the `createRequest()` method.
+- Add a button that links to `pages/campaigns/[address]/create-request.tsx` where we can create a new request. Create the form that takes inputs necessary to run the `createRequest()` method. Create a request to test it out (remember to use a valid recipient address!).
+- Create the requests lists page in `pages/campaigns/[address]/requests.tsx`. Solidity does not allow us to get an array of structs (i.e. Request structs), so we'll need to use the requests count and manually iterate through out requests mapping.
+- Use Semantic UI to create a grid of requests and a RequestRow component.
 
 ## Packages
 
